@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import useInput from "../hooks/useInput";
-import axios from 'axios'
+import axios from "axios";
 
 import classes from "./Form.module.css";
 
 const Form = (props) => {
   //if we just gets input and submit...useref is betterr..but if we wanna do some changes...Should use State..
- const [passType,setpassType] = useState('');
+  const [passType, setpassType] = useState("password");
   const {
     enteredValue: enteredName,
     valueValidity: nameValidity,
@@ -42,21 +42,20 @@ const Form = (props) => {
   if (nameValidity && emailValidity && passValidity) {
     formValidity = true;
   }
-  const passShowHandler =()=>{
-    setpassType('text')
-  }
+  const passShowHandler = () => {
+    if (passType === "password") {
+      setpassType("text");
+    } else {
+      setpassType("password");
+    }
+  };
 
   const submitHandler = (e) => {
     console.log("form", formValidity);
     e.preventDefault();
 
-    if (!formValidity) {
-      
-    //   nameReset();
-    //   emailReset();
-    //   passReset();
-    }
-    console.log(
+    if (formValidity) {
+      console.log(
         "Name:",
         enteredName,
         " Email:",
@@ -64,26 +63,29 @@ const Form = (props) => {
         "Pass :",
         enteredPass
       );
-      const payload = {
-        UserName:enteredName,
-        Password:enteredPass
-      }
-   axios.post('https://daarconn-dev.alarkan.com/Account/validatelogin',payload,{
-        headers:{
-            Authorization:'Bearer RGFhci05MUAxMjM0OlBhc3M3NkBAJiY=',
-            'Content-Type':'application/json',
-            'Content-Length':'<calculated when request is sent>',
-            Accept:'*/*',
-            'Accept-Encoding':'gzip, deflate, br',
-            'Connection':'keep-alive'
-        }
-      }).then((res) => {
-        console.log("Test Api Response : ",res.data);
-      }).catch((error) => {
-        console.log("Test Api Error : ",error)
-      })
-    
-      
+      nameReset();
+      emailReset();
+      passReset();
+    }
+
+    //   const payload = {
+    //     UserName:enteredName,
+    //     Password:enteredPass
+    //   }
+    //    axios.post('https://daarconn-dev.alarkan.com/Account/validatelogin',payload,{
+    //         headers:{
+    //             Authorization:'Bearer RGFhci05MUAxMjM0OlBhc3M3NkBAJiY=',
+    //             'Content-Type':'application/json',
+    //             'Content-Length':'<calculated when request is sent>',
+    //             Accept:'*/*',
+    //             'Accept-Encoding':'gzip, deflate, br',
+    //             'Connection':'keep-alive'
+    //         }
+    //       }).then((res) => {
+    //         console.log("Test Api Response : ",res.data);
+    //       }).catch((error) => {
+    //         console.log("Test Api Error : ",error)
+    //       })
   };
   //////////////////////////////// Classes /////////////////////////////////////////////////////////
   let nameclass = nameClassInvalid
@@ -94,9 +96,9 @@ const Form = (props) => {
     ? classes.input + " " + classes.invalid
     : classes.input;
   let passclass = passClassInvalid
-    ? classes.input + " " + classes.invalid
-    : classes.input;
-//   let passType = "password";
+    ? classes.input + " " + classes.invalid + " " + classes.btnPass
+    : classes.input+  " " + classes.btnPass;
+
   /////////////////////////////////////////// Form return ///////////////////////////////////////////////////////
   return (
     <form className={classes.form} onSubmit={submitHandler}>
@@ -118,7 +120,7 @@ const Form = (props) => {
           )}
         </label>
       </div>
-      {/* <div className={emailclass}>
+      <div className={emailclass}>
         <label>
           Email
           <input
@@ -135,8 +137,7 @@ const Form = (props) => {
             <p>-</p>
           )}
         </label>
-        <button onClick={passShowHandler}>{passType === "password" ? "Show" : "Hide"}</button>
-      </div> */}
+      </div>
       <div className={passclass}>
         <label>
           Password
@@ -154,9 +155,12 @@ const Form = (props) => {
             <p>-</p>
           )}
         </label>
+        <button type="button" onClick={passShowHandler} >
+          {passType === "password" ? "Show" : "Hide"}
+        </button>
       </div>
       <div className={classes["btn-main"]}>
-        <button className={classes.btn} disabled={formValidity}>
+        <button className={classes.btn} disabled={!formValidity}>
           Submit
         </button>
       </div>

@@ -26,17 +26,18 @@
   border: 1px solid #ccc;
   font: inherit;
   padding-left: 0.5rem;
+  outline: none;
+  padding-block: 2%;
 }
 .input.invalid input {
   border: 1px solid #ff0000;
   background-color: #ffa1a1;
 }
-.btn-main{
-    text-align: right;
+.btn-main {
+  text-align: right;
 }
 
 .btn {
-
   height: 3rem;
   width: 9rem;
   background-color: aqua;
@@ -54,6 +55,34 @@
   border: 2px solid rgb(255, 255, 255);
 }
 .btn:disabled {
+  background-color: rgb(172, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  cursor: not-allowed;
+}
+.btnPass input{
+  width: 80%;
+  padding-right: 40%;
+
+}
+.btnPass button {
+  margin-left: -7.2%;
+  margin-top: -2.8%;
+  height: 1.55rem;
+  width: 7rem;
+  background-color: aqua;
+  border: 2px solid rgb(255, 255, 255);
+  border-top-right-radius: 20px;
+  font-weight: bolder;
+}
+.btnPass button:hover {
+  background-color: rgb(0, 134, 134);
+}
+
+.btnPass button:active {
+  background-color: rgb(0, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+}
+.btnPass button:disabled {
   background-color: rgb(172, 255, 255);
   border: 2px solid rgb(255, 255, 255);
   cursor: not-allowed;
